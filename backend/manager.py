@@ -35,9 +35,8 @@ class CellManager:
             return
 
         neighbors = [p for p in ALL_PORTS if p != port]
-        # We need to run cell.py from the parent directory
-        # Assuming backend/manager.py is in backend/ and cell.py is in root
-        cwd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # We run cell.py from the current directory (backend/)
+        cwd = os.path.dirname(os.path.abspath(__file__))
         
         args = [sys.executable, "cell.py", str(port)] + [str(n) for n in neighbors]
         
@@ -62,7 +61,7 @@ class CellManager:
     def start_cluster(self):
         self._log("Launching CellSync Cluster...")
         # Cleanup old storage
-        cwd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        cwd = os.path.dirname(os.path.abspath(__file__))
         for port in ALL_PORTS:
             storage_path = os.path.join(cwd, f"storage_{port}")
             if os.path.exists(storage_path):
